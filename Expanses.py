@@ -32,7 +32,7 @@ class Expanses():
         for i in cls.Expanse_list :
             if i["title"] == name:
                 cls.Expanse_list.remove(i)
-                log(f"remove of {i["title"]} has been successfully ! ")
+                log(f"remove of {i['title']} has been successfully ! ")
                 remove_flag = True
                 break 
             else : 
@@ -49,7 +49,7 @@ class Expanses():
                 filtered_list.append(i)
             else : 
                 continue
-            return filtered_list
+        return filtered_list
     @classmethod
     def filter_by_amount(cls ,lower_limit = 0 , upper_limit=max_element(Expanse_list)):
         filtered_list= []
@@ -59,7 +59,41 @@ class Expanses():
             else:            
                 continue
         return filtered_list
+    @classmethod 
+    def Edit(cls , name ,amount , title , category , date =datetime.today().strftime("%Y-%m-%d")):
+        edit_flag = False 
+        for i in cls.Expanse_list :
+            if i["title"]== name : 
+                i["amount"] = amount
+                i["title"] = title
+                i["category"] = category
+                i['date'] = date
+                log(f"edit of {i['title']} has been successfully ! ")
+            else: 
+                continue
+        if edit_flag == False : 
+            log(f"the {i['title']} couldnt find the expanses list ")
+    @classmethod 
+    def sort_by_amount (cls):
+        sorted_list = list(cls.Expanse_list[:]["amount"]).sort(reverse=True)
+        title_list = []
+        for i in sorted_list:
+            if cls.Expanse_list["amount"]== i :
                 
-                
-                
+                title_list.append(cls.Expanse_list["title"])
+            else:
+                continue 
+        
+        return zip(title_list , sorted_list)
+    @staticmethod
+    def Validation_amount(amount):
+        try : 
+            number = int(amount)
+            if number < 0 :
+                log ("your amount of Expanse is not valid ")
+        except: 
+            log ("please Enter the valid number for amount")
+            
+            
+            
                 
