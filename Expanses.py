@@ -3,9 +3,8 @@ from datetime import datetime
 import pandas as pd 
 import xlswriter
 import matplotlib.pyplot as plt 
-def log(msg):
-    print(msg)
-
+import logging
+from GUI import *
 class Expanses():
     
     Expanse_list = []
@@ -28,13 +27,13 @@ class Expanses():
         for i in cls.Expanse_list :
             if i["title"] == name:
                 cls.Expanse_list.remove(i)
-                log(f"remove of {i['title']} has been successfully ! ")
+                logging.info(f"remove of {i['title']} has been successfully ! ")
                 remove_flag = True
                 break 
             else : 
                 pass 
         if remove_flag == False : 
-            log("your desired Expanses cant find in the database ")
+            logging.info("your desired Expanses cant find in the database ")
                 
                 
     @classmethod
@@ -56,7 +55,7 @@ class Expanses():
             lower = float(lower_limit)
             upper = float(upper_limit)
         except:
-            log("Invalid amount range — must be numbers")
+            logging.error("Invalid amount range — must be numbers")
             return []
         for i in cls.Expanse_list:
             if int(i["amount"]) > lower and int(i["amount"]) < upper:
@@ -73,12 +72,12 @@ class Expanses():
                 i["title"] = title
                 i["category"] = category
                 i['date'] = date
-                log(f"edit of {i['title']} has been successfully ! ")
+                logging.info(f"edit of {i['title']} has been successfully ! ")
                 edit_flag = True
             else: 
                 continue
         if edit_flag == False : 
-            log(f"the {name} couldnt find the expanses list ")
+            logging.info(f"the {name} couldnt find the expanses list ")
     @classmethod 
     def sort_by_amount (cls):
         sorted_list = sorted(cls.Expanse_list , key = lambda x :x ["amount"] , reverse=True)
@@ -88,16 +87,16 @@ class Expanses():
         try : 
             number = int(amount)
             if number < 0 :
-                log ("your amount of Expanse is not valid ")
+                logging.info ("your amount of Expanse is not valid ")
         except: 
-            log ("please Enter the valid number for amount")
+            logging.error ("please Enter the valid number for amount")
     @classmethod
     def Total_Expanses(cls):
         try: 
             total =  sum(e["amount"] for e in cls.Expanse_list)
             return total 
         except : 
-            log ("please enter the valid amount ")
+            logging.info ("please enter the valid amount ")
             return None 
     @classmethod
     def filter_by_date(cls,start_date , end_date):
@@ -129,6 +128,7 @@ def Save_Excel():
         worksheet.write(i+1, 2, item['category'])
         worksheet.write(i+1, 3, item['date'])
     workbook.close()
+    logging.info("the excel file has been saved succesfully !")
     
     
         
