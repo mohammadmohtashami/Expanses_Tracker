@@ -1,12 +1,10 @@
 from tkinter import *
 from tkcalendar import Calendar 
-
+from tkinter import ttk
 root = Tk()
 
 def apply():
     pass 
-
-
 def add():
     # define a new window 
     add_window = Tk()
@@ -87,6 +85,12 @@ def filter_page():
         filter_window.destroy()
         return  category_filter , title_filter , upper_amount_filter  , lower_amount_filter , start_date_filter , end_date_filter
     mainloop()
+def edit(item):
+    pass
+
+def delete(item):
+    treeview.delete(item)
+    
 
 # define the objects of the root window 
 filter_btn = Button(root , text = "filter page" , command= filter_page)
@@ -96,5 +100,16 @@ add_btn = Button(root , text = "add " , command= add)
 filter_btn.grid(row=2  , column= 1)
 apply_btn.grid(row = 0  ,column= 1 )
 add_btn.grid(row=1  ,column=1)
-
+edit_btn = Button(root , text = "edit" , command = lambda : edit())
+edit_btn.grid(row = 3 , column = 1)
+delete_btn = Button(root , text="delete" , command = lambda:delete())
+delete_btn.grid(row = 4 , column =1)
+treeview = ttk.Treeview(columns=("category" , "amount" , "date"))
+treeview.grid(row = 6 , columnspan=3 , column=1)
+treeview.heading("#0" , text="Expanses title")
+treeview.heading("category" ,text="Expanses category")
+treeview.heading("amount" , text="Expanses amount")
+treeview.heading("date" ,text="Expanses date")
+# how to insert a vlue in treeview 
+# treeview.insert("" , tk.END , text="Item 1")
 mainloop()
