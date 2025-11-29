@@ -7,7 +7,7 @@ def apply():
     pass 
 def add():
     # define a new window 
-    add_window = Tk()
+    add_window = Toplevel(root)
     # define the objects 
     value_option = ["Transportation" , "Food" , "purchase" , "Fun" , "other"]
     add_window.title("add Expanses")
@@ -42,11 +42,11 @@ def add():
         date = cal.get_date()
 
         return title , category , amount , date  
-    mainloop()
+
 
 def filter_page():
     
-    filter_window = Tk()
+    filter_window = Toplevel()
     filter_option = ["Transportation" , "Food" , "purchase" , "Fun" , "other"]
 
     filter_title_lbl = Label(filter_window , text = "add a topic to filter the title expanses")
@@ -84,12 +84,12 @@ def filter_page():
         end_date_filter = end_date_filter_entry.get()
         filter_window.destroy()
         return  category_filter , title_filter , upper_amount_filter  , lower_amount_filter , start_date_filter , end_date_filter
-    mainloop()
+
 def edit(item):
     pass
 
 def delete(item):
-    treeview.delete(item)
+    treeview.delete(item[0])
     
 
 # define the objects of the root window 
@@ -104,9 +104,9 @@ edit_btn = Button(root , text = "edit" , command = lambda : edit(treeview.select
 edit_btn.grid(row = 3 , column = 1)
 delete_btn = Button(root , text="delete" , command = lambda:delete(treeview.selection()))
 delete_btn.grid(row = 4 , column =1)
-treeview = ttk.Treeview(columns=("category" , "amount" , "date"))
+treeview = ttk.Treeview(columns=("title" ,"category" , "amount" , "date"))
 treeview.grid(row = 6 , columnspan=3 , column=1)
-treeview.heading("#0" , text="Expanses title")
+treeview.heading("title" , text="Expanses title")
 treeview.heading("category" ,text="Expanses category")
 treeview.heading("amount" , text="Expanses amount")
 treeview.heading("date" ,text="Expanses date")
